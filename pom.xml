@@ -49,6 +49,7 @@
 		<cucumber.version>4.3.1</cucumber.version>
 		<appium-java-client.version>6.1.0</appium-java-client.version>
 		<cverges-expect4j.version>1.9</cverges-expect4j.version>
+		<oracle-driver>/Users/abdelsalam/git/SHAFT_ENGINE/lib/ojdbc6.jar</oracle-driver>
 
 	</properties>
 
@@ -155,6 +156,13 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>11.2.0</version>
+			<scope>system</scope>
+			<systemPath>${oracle-driver}</systemPath>
 		</dependency>
 
 		<!-- remote ssh commands -->
