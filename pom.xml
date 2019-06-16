@@ -157,6 +157,8 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
+
+		<!-- Databases -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc</artifactId>
@@ -164,6 +166,17 @@
 			<scope>system</scope>
 			<systemPath>${oracle-driver}</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>7.2.2.jre8</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901-1.jdbc4</version>
+		</dependency>
+
 
 		<!-- remote ssh commands -->
 		<dependency>

@@ -1,12 +1,10 @@
 package com.shaft.db;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import java.sql.Connection;
+
 import org.testng.annotations.Test;
 
 import com.shaft.validation.Assertions;
-
-import java.sql.*;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -16,30 +14,49 @@ public class TempDBTest {
 
 	// Objects
 	OracleDBConnection OracleDBConnection;
-
+	SQLServerDBConnection SQLServerDBConnection;
 	// Variables
 	Connection connection;
+
+	@Test
+	@Description
+	@Severity(SeverityLevel.NORMAL)
+	public void testOracleConnection_insertNewRow_selectAndAssert() {
+		// Open connection
+		OracleDBConnection = new OracleDBConnection();
+		connection = OracleDBConnection.openConnection();
+
+		// Insert new row
+		OracleDBConnection.executeUpdateStatement(connection,
+				"Insert into APEX_040200.abdelsalam values (3,'AutomationTest2')");
+
+		// Select the new row and assert on it
+		String Name = OracleDBConnection.executeSelectStatement(connection,
+				"select * from APEX_040200.abdelsalam where name = 'AutomationTest2'");
+		Assertions.assertEquals("AutomationTest2", Name.toString(), 1, true);
+
+		// Close connection
+		OracleDBConnection.closeConnection(connection);
+	}
 
 	@Test()
 	@Description()
 	@Severity(SeverityLevel.NORMAL)
-	public void testConnection_insertNewRow_selectAndAssert() {
+	public void testSQLServerConnection_insertNewRow_selectAndAssert() {
+		// Open connection
+		SQLServerDBConnection = new SQLServerDBConnection();
+		connection = SQLServerDBConnection.openConnection();
+
 		// Insert new row
-		OracleDBConnection.executeUpdateStatement(connection, "Insert into APEX_040200.abdelsalam values (3,'AutomationTest1')");
-		
+		SQLServerDBConnection.executeUpdateStatement(connection,
+				"Insert into abdelsalam.dbo.automation_table values (2,'AutomationTest3')");
+
 		// Select the new row and assert on it
-		String Name = OracleDBConnection.executeSelectStatement(connection, "select * from APEX_040200.abdelsalam where name = 'AutomationTest1'");
-		Assertions.assertEquals("AutomationTest1", Name.toString(), 1, true);
-	}
+		String Name = SQLServerDBConnection.executeSelectStatement(connection,
+				"select * from abdelsalam.dbo.automation_table where name = 'AutomationTest3'");
+		Assertions.assertEquals("AutomationTest3", Name.toString().trim(), 1, true);
 
-	@BeforeClass
-	public void beforeClass() {
-		OracleDBConnection = new OracleDBConnection();
-		connection = OracleDBConnection.openConnection();
-	}
-
-	@AfterClass
-	public void afterClass() {
-		OracleDBConnection.closeConnection(connection);
+		// Close connection
+		SQLServerDBConnection.closeConnection(connection);
 	}
 }
