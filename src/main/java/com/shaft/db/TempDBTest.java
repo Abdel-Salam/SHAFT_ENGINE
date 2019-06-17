@@ -15,6 +15,7 @@ public class TempDBTest {
 	// Objects
 	OracleDBConnection OracleDBConnection;
 	SQLServerDBConnection SQLServerDBConnection;
+	PostgreSQLDBConnection PostgreSQLDBConnection;
 	// Variables
 	Connection connection;
 
@@ -58,5 +59,26 @@ public class TempDBTest {
 
 		// Close connection
 		SQLServerDBConnection.closeConnection(connection);
+	}
+
+	@Test()
+	@Description()
+	@Severity(SeverityLevel.NORMAL)
+	public void testPostgreSQLConnection_insertNewRow_selectAndAssert() {
+		// Open connection
+		PostgreSQLDBConnection = new PostgreSQLDBConnection();
+		connection = PostgreSQLDBConnection.openConnection();
+
+		// Insert new row
+		PostgreSQLDBConnection.executeUpdateStatement(connection,
+				"INSERT INTO account (id, name) VALUES (1, 'ahmed')");
+
+		// Select the new row and assert on it
+		String Name = PostgreSQLDBConnection.executeSelectStatement(connection,
+				"select * from account");
+		Assertions.assertEquals("ahmed", Name.toString().trim(), 1, true);
+
+		// Close connection
+		PostgreSQLDBConnection.closeConnection(connection);
 	}
 }
