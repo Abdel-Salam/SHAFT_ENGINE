@@ -254,7 +254,7 @@ public class RestActions {
 	try {
 	    switch (contentType) {
 	    case JSON:
-		builder.setBody(body, ObjectMapperType.GSON);
+		builder.setBody(body, ObjectMapperType.JACKSON_2);
 		break;
 	    case XML:
 		builder.setBody(body, ObjectMapperType.JAXB);
